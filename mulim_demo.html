@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مُلم | Mulim — منصة محاكاة الأثر التشريعي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#101826; --ink2:#3A4557; --line:#DCE1E8; --bg:#F2F4F7; --card:#FFFFFF;
+  --green:#0E7A5F; --green-soft:#E3F1EC; --gold:#C9A227; --gold-soft:#FBF4DE;
+  --red:#C0392B; --red-soft:#FBEAE7; --amber:#D97C0B; --amber-soft:#FCF0DF;
+  --navy:#0E1B2C; --radius:6px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'IBM Plex Sans Arabic',Tahoma,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.65}
+.mono{font-family:'IBM Plex Mono',monospace;font-feature-settings:'tnum'}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+button:focus-visible,a:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ---------- shell ---------- */
+header{background:var(--navy);color:#fff;padding:0 28px;height:60px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:50}
+.logo{font-weight:700;font-size:20px;letter-spacing:.5px}
+.logo em{font-style:normal;color:var(--gold)}
+.logo small{font-weight:400;font-size:11px;opacity:.65;display:block;margin-top:-4px;letter-spacing:0}
+nav{display:flex;gap:4px;margin-inline-start:24px}
+nav button{color:#B9C3D0;padding:8px 14px;border-radius:var(--radius);font-size:14px;font-weight:500}
+nav button:hover{color:#fff;background:rgba(255,255,255,.08)}
+nav button.on{color:#fff;background:var(--green)}
+.hd-tools{margin-inline-start:auto;display:flex;gap:8px;align-items:center}
+.btn{padding:8px 16px;border-radius:var(--radius);font-weight:600;font-size:14px}
+.btn-gold{background:var(--gold);color:var(--navy)}
+.btn-gold:hover{filter:brightness(1.06)}
+.btn-ghost{border:1px solid rgba(255,255,255,.3);color:#fff}
+.btn-green{background:var(--green);color:#fff}
+.btn-line{border:1px solid var(--line);color:var(--ink2);background:#fff}
+.btn-red{background:var(--red-soft);color:var(--red);border:1px solid #EBC6C0}
+main{max-width:1180px;margin:0 auto;padding:26px 24px 80px}
+.screen{display:none}.screen.on{display:block}
+h1{font-size:26px;font-weight:700}
+h2{font-size:18px;font-weight:700;margin-bottom:12px}
+.muted{color:var(--ink2);font-size:13.5px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.tag{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12px;font-weight:600}
+.t-gap{background:var(--red-soft);color:var(--red)}
+.t-partial{background:var(--amber-soft);color:var(--amber)}
+.t-covered{background:var(--green-soft);color:var(--green)}
+.t-info{background:#EDF0F4;color:var(--ink2)}
+
+/* ---------- intake ---------- */
+.hero{padding:40px 0 10px;max-width:720px}
+.hero .eyebrow{color:var(--green);font-weight:700;font-size:13px;letter-spacing:.5px;margin-bottom:8px}
+.hero h1{font-size:32px;line-height:1.4}
+.hero p{margin-top:10px;color:var(--ink2);font-size:16px}
+.drops{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin:28px 0 20px}
+.drop{border:1.5px dashed var(--line);border-radius:var(--radius);background:#fff;padding:22px 16px;text-align:center;transition:border-color .15s}
+.drop.done{border-style:solid;border-color:var(--green);background:var(--green-soft)}
+.drop .ic{font-size:26px}
+.drop b{display:block;margin:8px 0 2px;font-size:14px}
+.drop span{font-size:12px;color:var(--ink2)}
+.drop .st{display:block;margin-top:10px;font-size:12.5px;font-weight:700;color:var(--green)}
+
+/* processing */
+#proc{max-width:560px;margin:70px auto;text-align:center}
+.pbar{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin:26px 0 14px}
+.pbar i{display:block;height:100%;width:0;background:var(--green);transition:width .5s}
+#procstep{font-weight:600;min-height:26px}
+.plog{text-align:right;margin-top:22px;font-size:13.5px;color:var(--ink2)}
+.plog div{padding:4px 0;opacity:0;transform:translateY(4px);transition:all .4s}
+.plog div.show{opacity:1;transform:none}
+.plog div::before{content:'✓';color:var(--green);font-weight:700;margin-inline-end:8px}
+
+/* ---------- dashboard ---------- */
+.dash-top{display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:stretch}
+.gaugecard{text-align:center;display:flex;flex-direction:column;justify-content:center}
+.gauge{width:210px;margin:0 auto}
+#scoreNum{font-size:44px;font-weight:700}
+#scoreBand{font-weight:700}
+.vars{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.var{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+.var b{font-size:22px;display:block}
+.var span{font-size:12.5px;color:var(--ink2)}
+.deadline{margin-top:16px;padding:14px 18px;border-radius:var(--radius);display:flex;gap:16px;align-items:center;border:1px solid var(--line);background:#fff}
+.deadline .bar{flex:1;height:10px;background:var(--line);border-radius:6px;overflow:hidden;position:relative}
+.deadline .bar i{display:block;height:100%;background:var(--green)}
+.deadline.tight .bar i{background:var(--red)}
+.deadline b.mono{font-size:15px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.dept{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
+.dept:last-child{border:none}
+.dept .nm{width:140px;font-weight:600;font-size:14px}
+.dept .db{flex:1;height:8px;background:var(--line);border-radius:5px;overflow:hidden}
+.dept .db i{display:block;height:100%}
+.dept .pc{width:78px;text-align:left;font-size:13px;font-weight:600}
+.legend{display:flex;gap:16px;font-size:12.5px;color:var(--ink2);margin-top:10px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-inline-end:5px;vertical-align:-1px}
+
+/* ---------- matrix ---------- */
+.mwrap{overflow:auto;border:1px solid var(--line);border-radius:var(--radius);background:#fff}
+table.matrix{border-collapse:collapse;font-size:12px;min-width:900px;width:100%}
+.matrix th,.matrix td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+.matrix th{background:#F7F9FB;font-weight:600;position:sticky;top:0}
+.matrix td:first-child,.matrix th:first-child{text-align:right;position:sticky;right:0;background:#fff;min-width:230px;font-weight:500}
+.cell{width:16px;height:16px;border-radius:4px;display:inline-block}
+.c-gap{background:var(--red)}.c-partial{background:var(--amber)}.c-covered{background:var(--green)}
+
+/* ---------- review ---------- */
+.rev{border:1px solid var(--line);border-radius:var(--radius);background:#fff;margin-bottom:14px;overflow:hidden}
+.rev .rh{display:flex;align-items:center;gap:12px;padding:12px 18px;background:#F7F9FB;border-bottom:1px solid var(--line);font-size:13.5px}
+.conf{display:flex;align-items:center;gap:8px;margin-inline-start:auto}
+.conf .cb{width:90px;height:7px;background:var(--line);border-radius:5px;overflow:hidden}
+.conf .cb i{display:block;height:100%;background:var(--amber)}
+.rev .cols{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.rev .col{padding:16px 18px}
+.rev .col+.col{border-inline-start:1px solid var(--line)}
+.rev .col h4{font-size:12px;color:var(--ink2);font-weight:600;margin-bottom:6px}
+.rev .rationale{padding:10px 18px;background:var(--gold-soft);font-size:13.5px;border-top:1px solid var(--line)}
+.rev .acts{display:flex;gap:10px;padding:12px 18px;border-top:1px solid var(--line)}
+.rev.decided{opacity:.55}
+.rev .decision{padding:10px 18px;font-weight:700;font-size:13.5px;border-top:1px solid var(--line)}
+
+/* ---------- whatif ---------- */
+.sliders{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px}
+.sl{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+.sl label{font-weight:600;font-size:14px;display:flex;justify-content:space-between}
+.sl label output{color:var(--green);font-weight:700}
+input[type=range]{width:100%;accent-color:var(--green);margin-top:12px}
+.wi-res{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.wi-res .card{text-align:center}
+.wi-res b{font-size:28px;display:block}
+.delta{font-size:13px;font-weight:700}
+.delta.down{color:var(--green)}.delta.up{color:var(--red)}
+
+/* ---------- plan ---------- */
+.plan-dept{margin-bottom:18px}
+.plan-dept h3{font-size:15px;margin-bottom:8px;display:flex;gap:10px;align-items:center}
+.task{display:flex;gap:12px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:10px 16px;margin-bottom:6px;font-size:13.5px}
+.task .pr{font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:20px}
+.pr.high{background:var(--red-soft);color:var(--red)}
+.pr.med{background:var(--amber-soft);color:var(--amber)}
+.task .eff{margin-inline-start:auto;color:var(--ink2);font-size:12.5px;white-space:nowrap}
+
+/* ---------- chat ---------- */
+#chatBtn{position:fixed;bottom:26px;left:26px;background:var(--navy);color:#fff;padding:13px 20px;border-radius:30px;font-weight:700;font-size:14px;box-shadow:0 6px 18px rgba(14,27,44,.3);z-index:60}
+#chat{position:fixed;bottom:0;left:0;width:390px;max-width:100vw;height:520px;background:#fff;border:1px solid var(--line);border-radius:10px 10px 0 0;display:none;flex-direction:column;z-index:70;box-shadow:0 -4px 30px rgba(14,27,44,.18)}
+#chat.on{display:flex}
+#chat .ch{background:var(--navy);color:#fff;padding:12px 18px;font-weight:700;display:flex;justify-content:space-between;border-radius:10px 10px 0 0}
+#chatMsgs{flex:1;overflow:auto;padding:16px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:85%;padding:10px 14px;border-radius:10px;font-size:13.5px}
+.msg.u{background:var(--green);color:#fff;align-self:flex-start}
+.msg.a{background:#F2F4F7;border:1px solid var(--line);align-self:flex-end}
+#chatForm{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+#chatIn{flex:1;border:1px solid var(--line);border-radius:var(--radius);padding:9px 12px;font-family:inherit;font-size:14px}
+
+.toolbar{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.toolbar h1{margin-inline-end:auto}
+@media(max-width:900px){.dash-top{grid-template-columns:1fr}.vars{grid-template-columns:repeat(2,1fr)}.grid2,.sliders,.wi-res{grid-template-columns:1fr}.rev .cols{grid-template-columns:1fr}nav{display:none}}
+@media print{header,#chatBtn,#chat,nav,.hd-tools,.no-print{display:none!important}body{background:#fff}main{max-width:100%}.screen{display:none}.screen.print-me{display:block!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">مُلِم <em>|</em> Mulim<small>منصة محاكاة الأثر التشريعي</small></div>
+  <nav id="nav" style="display:none">
+    <button data-s="dash" class="on">لوحة الأثر</button>
+    <button data-s="matrix">خريطة الفجوات</button>
+    <button data-s="review">مراجعة الربط <span id="revCount" class="tag t-partial" style="margin-inline-start:4px"></span></button>
+    <button data-s="whatif">المحاكاة</button>
+    <button data-s="plan">خطة التنفيذ</button>
+  </nav>
+  <div class="hd-tools">
+    <button class="btn btn-ghost no-print" id="printBtn" style="display:none" onclick="window.print()">تصدير التقرير</button>
+  </div>
+</header>
+
+<main>
+
+<!-- ============ INTAKE ============ -->
+<section class="screen on" id="s-intake">
+  <div class="hero">
+    <div class="eyebrow">تقييم جديد — بنك النموذج</div>
+    <h1>قبل تطبيق أي تشريع، اعرف تكلفته ومخاطره وأثره بدقائق</h1>
+    <p>ارفع التشريع الجديد ووثائق المؤسسة، ودع مُلم يحسب التقاطع بينهما: الفجوات، الإدارات المتأثرة، التكلفة، والوقت.</p>
+  </div>
+  <div class="drops" id="drops">
+    <div class="drop" data-name="التشريع الجديد"><div class="ic">📜</div><b>التشريع الجديد</b><span>تعليمات حماية بيانات العملاء — PDF</span><span class="st"></span></div>
+    <div class="drop" data-name="السياسات الداخلية"><div class="ic">📁</div><b>السياسات الداخلية</b><span>12 وثيقة سياسة</span><span class="st"></span></div>
+    <div class="drop" data-name="الإجراءات"><div class="ic">🧾</div><b>الإجراءات</b><span>وثائق إجراءات العمل</span><span class="st"></span></div>
+    <div class="drop" data-name="الهيكل التنظيمي"><div class="ic">🏛️</div><b>الهيكل التنظيمي</b><span>8 إدارات — CSV</span><span class="st"></span></div>
+    <div class="drop" data-name="سجل المخاطر"><div class="ic">⚠️</div><b>سجل المخاطر</b><span>7 مخاطر مسجلة — XLSX</span><span class="st"></span></div>
+  </div>
+  <button class="btn btn-green" id="runBtn" style="font-size:16px;padding:12px 34px" disabled>تشغيل التحليل</button>
+  <span class="muted" id="intakeHint" style="margin-inline-start:14px">اضغط على كل ملف لمحاكاة الرفع</span>
+</section>
+
+<!-- ============ PROCESSING ============ -->
+<section class="screen" id="s-proc">
+  <div id="proc">
+    <h1 style="font-size:22px">جارٍ تحليل «تعليمات حماية بيانات عملاء المؤسسات المالية»</h1>
+    <div class="pbar"><i id="pfill"></i></div>
+    <div id="procstep" class="muted"></div>
+    <div class="plog" id="plog"></div>
+  </div>
+</section>
+
+<!-- ============ DASHBOARD ============ -->
+<section class="screen" id="s-dash">
+  <div class="toolbar">
+    <h1>لوحة الأثر التشريعي</h1>
+    <span class="muted">REG-2026-014 · صادر 2026/06/01 · المهلة النظامية 2026/12/01</span>
+  </div>
+  <div class="dash-top">
+    <div class="card gaugecard">
+      <svg class="gauge" viewBox="0 0 200 120" aria-label="درجة الأثر">
+        <path d="M20 110 A 90 90 0 0 1 180 110" fill="none" stroke="#DCE1E8" stroke-width="16" stroke-linecap="round"/>
+        <path id="gArc" d="M20 110 A 90 90 0 0 1 180 110" fill="none" stroke="#C0392B" stroke-width="16" stroke-linecap="round" stroke-dasharray="283" stroke-dashoffset="283" style="transition:stroke-dashoffset .8s, stroke .5s"/>
+        <text x="100" y="92" text-anchor="middle" id="scoreNum" class="mono" fill="#101826">0</text>
+        <text x="100" y="112" text-anchor="middle" font-size="12" fill="#3A4557">درجة الأثر من 100</text>
+      </svg>
+      <div id="scoreBand" style="margin-top:6px"></div>
+      <div class="muted" style="margin-top:4px">تُعاد الحسبة مباشرةً مع كل قرار مراجعة</div>
+    </div>
+    <div>
+      <div class="vars" id="vars"></div>
+      <div class="deadline" id="deadline">
+        <div><b>جدوى الالتزام بالمهلة</b><div class="muted" id="dlText"></div></div>
+        <div class="bar"><i id="dlFill"></i></div>
+        <b class="mono" id="dlBadge"></b>
+      </div>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h2>جاهزية الإدارات</h2>
+      <div id="depts"></div>
+    </div>
+    <div class="card">
+      <h2>ملخص التغطية</h2>
+      <div id="coverage"></div>
+      <div class="legend">
+        <span><i class="dot" style="background:var(--red)"></i>فجوة</span>
+        <span><i class="dot" style="background:var(--amber)"></i>تطابق جزئي</span>
+        <span><i class="dot" style="background:var(--green)"></i>مغطى</span>
+      </div>
+      <div style="margin-top:16px;padding:12px 16px;background:var(--green-soft);border-radius:var(--radius);font-size:13.5px">
+        <b>نموذج 80/20:</b> <span id="autoPct"></span> من الروابط اعتُمدت آلياً بثقة عالية، و<span id="pendCt"></span> حالة حدّية بانتظار مراجعة موظف الالتزام.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MATRIX ============ -->
+<section class="screen" id="s-matrix">
+  <div class="toolbar"><h1>خريطة الفجوات — المتطلبات × السياسات</h1></div>
+  <div class="legend" style="margin-bottom:10px">
+    <span><i class="dot" style="background:var(--red)"></i>فجوة</span>
+    <span><i class="dot" style="background:var(--amber)"></i>تطابق جزئي</span>
+    <span><i class="dot" style="background:var(--green)"></i>مغطى</span>
+  </div>
+  <div class="mwrap"><table class="matrix" id="mtx"></table></div>
+</section>
+
+<!-- ============ REVIEW ============ -->
+<section class="screen" id="s-review">
+  <div class="toolbar">
+    <h1>قائمة المراجعة البشرية</h1>
+    <span class="muted">الحالات متوسطة الثقة (0.50 – 0.85) — قرارك يُحدَّث في درجة الأثر فوراً ويُوثَّق في سجل التدقيق</span>
+  </div>
+  <div id="revList"></div>
+</section>
+
+<!-- ============ WHAT-IF ============ -->
+<section class="screen" id="s-whatif">
+  <div class="toolbar"><h1>محاكاة السيناريوهات (What-if)</h1></div>
+  <div class="sliders">
+    <div class="sl">
+      <label>تأجيل الفجوات غير الحرجة <output id="oDefer">0%</output></label>
+      <input type="range" id="rDefer" min="0" max="50" value="0" step="10">
+      <div class="muted">تأجيل نسبة من فجوات المرحلة الأولى إلى مرحلة لاحقة</div>
+    </div>
+    <div class="sl">
+      <label>تكلفة تدريب الموظف <output id="oTrain">800 ر.س</output></label>
+      <input type="range" id="rTrain" min="400" max="1500" value="800" step="100">
+      <div class="muted">داخلي مقابل مزوّد خارجي</div>
+    </div>
+    <div class="sl">
+      <label>الطاقة الاستيعابية للفريق <output id="oCap">4 مسارات</output></label>
+      <input type="range" id="rCap" min="2" max="8" value="4" step="1">
+      <div class="muted">عدد المهام المنفَّذة بالتوازي</div>
+    </div>
+  </div>
+  <div class="wi-res">
+    <div class="card"><span class="muted">درجة الأثر</span><b class="mono" id="wiScore"></b><span class="delta" id="wiScoreD"></span></div>
+    <div class="card"><span class="muted">التكلفة المتوقعة</span><b class="mono" id="wiCost"></b><span class="delta" id="wiCostD"></span></div>
+    <div class="card"><span class="muted">الوقت المطلوب</span><b class="mono" id="wiTime"></b><span class="delta" id="wiTimeD"></span></div>
+  </div>
+  <p class="muted" style="margin-top:14px">جميع القيم تُحسب من محرّك التقدير القابل للتهيئة — التكاليف الوحدوية تُعاير حسب كل مؤسسة، وتُعرض كتقدير لا كعرض سعر.</p>
+</section>
+
+<!-- ============ PLAN ============ -->
+<section class="screen" id="s-plan">
+  <div class="toolbar"><h1>خطة التنفيذ التلقائية</h1><span class="muted">مولّدة من الفجوات والتطابقات الجزئية، مجمّعة حسب الإدارة</span></div>
+  <div id="planList"></div>
+</section>
+
+</main>
+
+<button id="chatBtn" style="display:none">💬 اسأل التشريع</button>
+<div id="chat" role="dialog" aria-label="محادثة التشريع">
+  <div class="ch"><span>مساعد مُلم — اسأل عن التشريع</span><button style="color:#fff;font-size:18px" onclick="toggleChat()">✕</button></div>
+  <div id="chatMsgs">
+    <div class="msg a">مرحباً! اسألني عن أي متطلب في «تعليمات حماية بيانات العملاء» أو عن وضع البنك الحالي تجاهه. مثال: <b>هل نحتاج مسؤول حماية بيانات؟</b></div>
+  </div>
+  <form id="chatForm"><input id="chatIn" placeholder="اكتب سؤالك…" autocomplete="off"><button class="btn btn-green">إرسال</button></form>
+</div>
+
+<script>
+/* ================= DATA (from demo_data.json) ================= */
+const DEPTS=[["D1","الالتزام",22],["D2","الأمن السيبراني",35],["D3","تقنية المعلومات",110],["D4","التسويق",48],["D5","خدمة العملاء",125],["D6","الموارد البشرية",40],["D7","إدارة المخاطر",18],["D8","العمليات",230]].map(d=>({id:d[0],name:d[1],headcount:d[2]}));
+const SYSTEMS=[["S1","النظام البنكي الأساسي","D3","L"],["S2","إدارة علاقات العملاء","D5","M"],["S3","أتمتة التسويق","D4","S"],["S4","مستودع البيانات","D3","L"],["S5","تطبيق الجوال","D3","M"],["S6","المراقبة الأمنية SIEM","D2","M"]].map(s=>({id:s[0],name:s[1],dept:s[2],band:s[3]}));
+const POLICIES=[["P1","سياسة خصوصية بيانات العملاء","D1"],["P2","سياسة الأمن السيبراني","D2"],["P3","سياسة الاحتفاظ بالبيانات وإتلافها","D3"],["P4","سياسة التسويق والاتصالات الرقمية","D4"],["P5","إجراءات التعامل مع شكاوى العملاء","D5"],["P6","سياسة إدارة الأطراف الثالثة","D1"],["P7","سياسة تدريب وتوعية الموظفين","D6"],["P8","سياسة الاستجابة للحوادث","D2"],["P9","سياسة إدارة الوصول والصلاحيات","D3"],["P10","سياسة الإفصاح والشفافية للعملاء","D5"],["P11","سجل ومنهجية إدارة المخاطر","D7"],["P12","سياسة نقل البيانات خارج المملكة","D1"]].map(p=>({id:p[0],title:p[1],dept:p[2]}));
+const REQS=[
+["R01","المادة 2-1","prescriptive","يجب تعيين مسؤول حماية بيانات مستقل يتبع للإدارة العليا مباشرة."],
+["R02","المادة 2-2","prescriptive","يجب إنشاء سجل شامل لأنشطة معالجة بيانات العملاء وتحديثه ربع سنوياً."],
+["R03","المادة 3-1","prescriptive","يجب الحصول على موافقة صريحة وموثقة قبل استخدام البيانات لأغراض تسويقية."],
+["R04","المادة 3-2","prohibitive","يحظر مشاركة بيانات العملاء مع أطراف ثالثة لأغراض تسويقية دون موافقة منفصلة."],
+["R05","المادة 3-3","prescriptive","يجب تمكين العميل من سحب موافقته التسويقية خلال 48 ساعة عبر كل القنوات."],
+["R06","المادة 4-1","prescriptive","يجب تشفير بيانات العملاء أثناء النقل والتخزين وفق المعايير الوطنية."],
+["R07","المادة 4-2","prescriptive","يجب تطبيق مبدأ الحد الأدنى من الصلاحيات على أنظمة بيانات العملاء."],
+["R08","المادة 4-3","prescriptive","يجب إجراء اختبار اختراق سنوي للأنظمة الحرجة وتوثيق نتائجه."],
+["R09","المادة 4-4","prescriptive","يجب مراقبة الوصول للبيانات آلياً وتسجيل جميع عمليات الاطلاع والتعديل."],
+["R10","المادة 5-1","prescriptive","يجب إبلاغ البنك المركزي عن حوادث التسريب خلال 24 ساعة."],
+["R11","المادة 5-2","prescriptive","يجب إبلاغ العملاء المتأثرين خلال 72 ساعة للحوادث عالية الخطورة."],
+["R12","المادة 5-3","prescriptive","يجب إجراء تمرين محاكاة سنوي لحوادث تسريب البيانات."],
+["R13","المادة 6-1","prescriptive","يجب تحديد فترات احتفاظ قصوى لكل فئة بيانات وإتلافها آلياً."],
+["R14","المادة 6-2","prohibitive","يحظر الاحتفاظ ببيانات العملاء السابقين أكثر من عشر سنوات إلا بمقتضى نظامي."],
+["R15","المادة 7-1","prescriptive","يجب تقييم مخاطر حماية البيانات لدى الأطراف الثالثة قبل التعاقد وسنوياً."],
+["R16","المادة 7-2","prescriptive","يجب تضمين بنود حماية البيانات في جميع عقود الموردين."],
+["R17","المادة 7-3","prohibitive","يحظر نقل البيانات خارج المملكة إلا بعد عدم ممانعة البنك المركزي."],
+["R18","المادة 8-1","prescriptive","يجب تدريب سنوي إلزامي موثق لكل المتعاملين مع بيانات العملاء."],
+["R19","المادة 8-2","prescriptive","يجب تضمين حماية البيانات في برنامج تهيئة الموظفين الجدد."],
+["R20","المادة 9-1","prescriptive","يجب تمكين العميل من الاطلاع على بياناته وطلب تصحيحها رقمياً."],
+["R21","المادة 9-2","prescriptive","يجب الرد على طلبات العملاء المتعلقة ببياناتهم خلال 15 يوم عمل."],
+["R22","المادة 9-3","prescriptive","يجب نشر إشعار خصوصية مبسّط بالعربية والإنجليزية في كل القنوات."],
+["R23","المادة 2-3","prescriptive","يجب إدراج مخاطر حماية البيانات في سجل المخاطر ومراجعتها ربع سنوياً."],
+["R24","المادة 4-5","informative","تُعد المعايير الوطنية للتشفير مرجعاً فنياً لهذه التعليمات."]
+].map(r=>({id:r[0],article:r[1],type:r[2],text:r[3]}));
+const MAPPINGS=[
+{r:"R01",p:"P1",rel:"gap",c:.91,st:"auto",why:"لا يوجد نص في أي سياسة عن تعيين مسؤول حماية بيانات مستقل."},
+{r:"R02",p:"P1",rel:"partial",c:.78,st:"pending",why:"السياسة تذكر توثيق المعالجة دون سجل شامل أو دورية ربع سنوية.",cl:"البند 4.2: توثق المؤسسة عمليات معالجة البيانات الرئيسية عند الحاجة."},
+{r:"R03",p:"P4",rel:"partial",c:.88,st:"auto",why:"تشترط الموافقة لكن ليست صريحة وموثقة.",cl:"البند 3.1: يُراعى الحصول على موافقة العميل قبل الحملات التسويقية."},
+{r:"R04",p:"P4",rel:"gap",c:.93,st:"auto",why:"لا يوجد حظر على مشاركة البيانات مع أطراف ثالثة لأغراض تسويقية."},
+{r:"R05",p:"P4",rel:"gap",c:.86,st:"auto",why:"آلية سحب الموافقة خلال 48 ساعة غير موجودة في أي سياسة أو نظام."},
+{r:"R06",p:"P2",rel:"covered",c:.95,st:"auto",why:"السياسة تلزم بالتشفير أثناء النقل والتخزين وفق المعايير الوطنية.",cl:"البند 5.3: تُشفَّر بيانات العملاء أثناء النقل والتخزين."},
+{r:"R07",p:"P9",rel:"covered",c:.92,st:"auto",why:"سياسة الوصول تطبق مبدأ الحد الأدنى من الصلاحيات.",cl:"البند 2.1: تُمنح الصلاحيات وفق الحاجة الفعلية والحد الأدنى."},
+{r:"R08",p:"P2",rel:"partial",c:.71,st:"pending",why:"اختبار الاختراق مطلوب دون تحديد دورية سنوية أو نطاق بيانات العملاء.",cl:"البند 7.2: تُجرى اختبارات الاختراق للأنظمة الحرجة دورياً."},
+{r:"R09",p:"P2",rel:"partial",c:.82,st:"pending",why:"المراقبة موجودة عبر SIEM لكن تسجيل الاطلاع على مستوى السجل غير منصوص.",cl:"البند 6.1: تُراقب الأنظمة الحرجة عبر مركز العمليات الأمنية."},
+{r:"R10",p:"P8",rel:"partial",c:.89,st:"auto",why:"السياسة تحدد 48 ساعة والتعليمات تشترط 24 ساعة.",cl:"البند 4.4: يتم إبلاغ الجهات التنظيمية خلال 48 ساعة."},
+{r:"R11",p:"P8",rel:"gap",c:.87,st:"auto",why:"لا يوجد التزام بإبلاغ العملاء المتأثرين ضمن مدة محددة."},
+{r:"R12",p:"P8",rel:"gap",c:.68,st:"pending",why:"تمارين المحاكاة مذكورة للحوادث السيبرانية عموماً لا لتسريب البيانات تحديداً — يحتاج قراراً بشرياً.",cl:"البند 8.1: تُجرى تمارين استجابة للحوادث السيبرانية."},
+{r:"R13",p:"P3",rel:"partial",c:.84,st:"pending",why:"فترات الاحتفاظ محددة لكن الإتلاف يدوي لا آلي.",cl:"البند 3.2: تُتلف البيانات بعد انتهاء الفترة بموجب طلب مالك البيانات."},
+{r:"R14",p:"P3",rel:"covered",c:.90,st:"auto",why:"السياسة تحدد حداً أقصى عشر سنوات متوافقاً مع التعليمات.",cl:"البند 2.4: الحد الأقصى للاحتفاظ عشر سنوات."},
+{r:"R15",p:"P6",rel:"partial",c:.76,st:"pending",why:"تقييم الموردين عند التعاقد فقط دون مراجعة سنوية.",cl:"البند 5.1: يُقيَّم المورد أمنياً قبل توقيع العقد."},
+{r:"R16",p:"P6",rel:"covered",c:.88,st:"auto",why:"بنود حماية البيانات إلزامية في نموذج العقد الموحد.",cl:"البند 6.2: تتضمن جميع العقود ملحق حماية البيانات."},
+{r:"R17",p:"P12",rel:"partial",c:.63,st:"pending",why:"السياسة تتطلب موافقة داخلية فقط — اشتراط عدم ممانعة البنك المركزي غير موجود. تشابه لفظي منخفض.",cl:"البند 1.3: يتطلب النقل خارج المملكة موافقة لجنة أمن المعلومات."},
+{r:"R18",p:"P7",rel:"partial",c:.80,st:"pending",why:"التدريب سنوي لكنه غير إلزامي ولا يوثَّق الاجتياز.",cl:"البند 2.2: تُقدَّم برامج توعية دورية للموظفين."},
+{r:"R19",p:"P7",rel:"gap",c:.85,st:"auto",why:"برنامج التهيئة لا يتضمن وحدة حماية البيانات."},
+{r:"R20",p:"P10",rel:"gap",c:.89,st:"auto",why:"لا توجد آلية رقمية لاطلاع العميل على بياناته أو تصحيحها."},
+{r:"R21",p:"P5",rel:"partial",c:.74,st:"pending",why:"الإجراءات تحدد 20 يوم عمل والتعليمات تشترط 15 يوماً.",cl:"البند 4.1: يُرد على طلبات العملاء خلال 20 يوم عمل."},
+{r:"R22",p:"P10",rel:"covered",c:.90,st:"auto",why:"إشعار الخصوصية منشور باللغتين في القنوات الرقمية.",cl:"البند 2.1: يُنشر إشعار الخصوصية بالعربية والإنجليزية."},
+{r:"R23",p:"P11",rel:"partial",c:.81,st:"pending",why:"مخاطر البيانات ضمن التشغيلية دون فئة مستقلة أو مراجعة ربع سنوية.",cl:"البند 3.5: تُراجع المخاطر التشغيلية نصف سنوياً."},
+{r:"R24",p:null,rel:"covered",c:.97,st:"auto",why:"متطلب تعريفي لا يتطلب إجراء."}
+];
+const RISKS=[
+{id:"RK1",t:"تسريب بيانات العملاء",sev:5,reqs:["R06","R09","R10","R11"]},
+{id:"RK2",t:"مخالفة تنظيمية في التسويق المباشر",sev:4,reqs:["R03","R04","R05"]},
+{id:"RK3",t:"وصول غير مصرح به",sev:4,reqs:["R07","R09"]},
+{id:"RK4",t:"إخفاق مورد خارجي",sev:4,reqs:["R15","R16","R17"]},
+{id:"RK5",t:"احتفاظ غير نظامي بالبيانات",sev:3,reqs:["R13","R14"]},
+{id:"RK6",t:"ضعف وعي الموظفين",sev:3,reqs:["R18","R19"]},
+{id:"RK7",t:"تأخر الاستجابة لطلبات العملاء",sev:2,reqs:["R20","R21"]}];
+const COST={policy:45000,band:{S:80000,M:250000,L:700000},sysAttr:.7,effGap:25,effPartial:12};
+const DEADLINE=new Date("2026-12-01");
+const CANNED=[
+{k:["مسؤول","حماية البيانات","dpo","تعيين"],a:"نعم — المادة 2-1 تلزم بتعيين مسؤول حماية بيانات مستقل يتبع للإدارة العليا مباشرة. حالياً لا توجد سياسة داخلية تغطي هذا المتطلب (فجوة، ثقة 91٪)."},
+{k:["24","إبلاغ","تسريب","حادث","حوادث"],a:"المادة 5-1 تشترط إبلاغ البنك المركزي خلال 24 ساعة من اكتشاف الحادث. سياسة الاستجابة الحالية (البند 4.4) تنص على 48 ساعة — تطابق جزئي يحتاج تعديل السياسة."},
+{k:["نقل","خارج المملكة","عبر الحدود"],a:"المادة 7-3 تحظر نقل بيانات العملاء خارج المملكة إلا بعد عدم ممانعة البنك المركزي. السياسة الحالية تكتفي بموافقة لجنة داخلية — تطابق جزئي بثقة 63٪ وهو في قائمة المراجعة البشرية."},
+{k:["تسويق","موافقة","حملات"],a:"المواد 3-1 إلى 3-3: موافقة صريحة موثقة قبل التسويق، حظر المشاركة مع أطراف ثالثة دون موافقة منفصلة، وسحب الموافقة خلال 48 ساعة. إدارة التسويق من أكثر الإدارات تأثراً — فجوتان وتطابق جزئي."},
+{k:["تدريب","موظفين","توعية","تهيئة"],a:"المادة 8-1 تلزم بتدريب سنوي إلزامي موثق لكل المتعاملين مع بيانات العملاء، والمادة 8-2 تلزم بإدراجه في تهيئة الموظفين الجدد — وهي فجوة حالياً. عدد الموظفين المتأثرين تقديرياً 398."},
+{k:["احتفاظ","إتلاف","عشر سنوات"],a:"المادة 6-1 تشترط فترات احتفاظ قصوى وإتلافاً آلياً (السياسة الحالية يدوية — تطابق جزئي)، والمادة 6-2 تحظر الاحتفاظ أكثر من عشر سنوات — وهذا مغطى في البند 2.4 من سياسة الاحتفاظ."}];
+
+/* ================= STATE & ENGINE ================= */
+const S={mappings:MAPPINGS.map(m=>({...m})),defer:0,train:800,cap:4,base:null};
+const fmtSAR=v=>{const m=v/1e6;return m>=1?m.toFixed(2)+" مليون ر.س":Math.round(v/1e3)+" ألف ر.س"};
+const dep=id=>DEPTS.find(d=>d.id===id);
+
+function compute(o={}){
+  const defer=o.defer??S.defer, train=o.train??S.train, cap=o.cap??S.cap;
+  const act=S.mappings.filter(m=>REQS.find(r=>r.id===m.r).type!=="informative");
+  const gaps=act.filter(m=>m.rel==="gap"), partials=act.filter(m=>m.rel==="partial");
+  const g=gaps.length, p=partials.length;
+  const gEff=g*(1-defer/100);
+  const affPol=[...new Set(act.filter(m=>m.rel!=="covered"&&m.p).map(m=>m.p))];
+  const affDept=[...new Set(affPol.map(pid=>POLICIES.find(x=>x.id===pid).dept))];
+  const emp=affDept.reduce((s,d)=>s+dep(d).headcount,0);
+  const affSys=SYSTEMS.filter(s=>affDept.includes(s.dept));
+  const openReqs=new Set(act.filter(m=>m.rel!=="covered").map(m=>m.r));
+  const liveRisks=RISKS.filter(rk=>rk.reqs.some(r=>openReqs.has(r)));
+  const riskAvg=liveRisks.length?liveRisks.reduce((s,r)=>s+r.sev,0)/liveRisks.length:0;
+  const effort=gEff*COST.effGap+p*COST.effPartial;
+  const weeks=Math.max(1,Math.ceil(effort/cap/5));
+  const availW=Math.max(1,Math.round((DEADLINE-Date.now())/6048e5));
+  const scale=(g+p)?(gEff+p)/(g+p):1;
+  const cost=affPol.length*COST.policy*scale + emp*train + affSys.reduce((s,x)=>s+COST.band[x.band],0)*COST.sysAttr*scale;
+  const score=Math.round(100*( .35*((gEff+.5*p)/act.length) + .20*(riskAvg/5) + .15*(affDept.length/DEPTS.length) + .15*(affSys.length/SYSTEMS.length) + .05*(emp/1240) + .10*Math.min(1,weeks/availW) ));
+  return{score,g,p,cov:act.length-g-p,affPol,affDept,emp,affSys,riskAvg,cost,weeks,availW,
+    band:score<=25?["منخفض","var(--green)"]:score<=50?["متوسط","var(--gold)"]:score<=75?["مرتفع","var(--amber)"]:["حرج","var(--red)"]};
+}
+
+/* ================= NAV ================= */
+const $=q=>document.querySelector(q);
+function go(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$("#s-"+id).classList.add("on");
+  document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.s===id));window.scrollTo(0,0);}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.s));
+
+/* ================= INTAKE ================= */
+let up=0;
+document.querySelectorAll(".drop").forEach(d=>d.onclick=()=>{if(d.classList.contains("done"))return;
+  d.classList.add("done");d.querySelector(".st").textContent="تم الرفع ✓";
+  if(++up===5){$("#runBtn").disabled=false;$("#intakeHint").textContent="جاهز — شغّل التحليل";}});
+$("#runBtn").onclick=()=>{go("proc");runProc();};
+
+const STEPS=[["استخراج المتطلبات التنظيمية من التشريع…","استُخرج 24 متطلباً من 9 مواد (يجب: 19 · يحظر: 3 · تعريفي: 2)"],
+["فهرسة 12 سياسة داخلية وبناء التمثيل الدلالي…","فُهرست 148 فقرة سياسة للبحث الهجين (دلالي + كلمات مفتاحية)"],
+["ربط المتطلبات بالسياسات وحساب درجات الثقة…","اعتُمد 58٪ من الروابط آلياً — 10 حالات حدّية حُوّلت للمراجعة البشرية"],
+["حساب الأثر: التكلفة والوقت والمخاطر…","اكتمل التحليل"]];
+function runProc(){let i=0;const log=$("#plog");
+  const tick=()=>{if(i<STEPS.length){$("#procstep").textContent=STEPS[i][0];$("#pfill").style.width=((i+1)/STEPS.length*100)+"%";
+    const row=document.createElement("div");row.textContent=STEPS[i][1];log.appendChild(row);requestAnimationFrame(()=>setTimeout(()=>row.classList.add("show"),50));
+    i++;setTimeout(tick,1400);}
+  else{$("#nav").style.display="flex";$("#printBtn").style.display="";$("#chatBtn").style.display="";
+    $("#s-dash").classList.add("print-me");S.base=compute();renderAll();go("dash");}};tick();}
+
+/* ================= RENDER ================= */
+function renderAll(){const R=compute();renderDash(R);renderMatrix();renderReview();renderWhatif();renderPlan(R);}
+function renderDash(R){
+  const arc=$("#gArc");arc.style.strokeDashoffset=283-(283*R.score/100);
+  arc.style.stroke=R.score<=25?"#0E7A5F":R.score<=50?"#C9A227":R.score<=75?"#D97C0B":"#C0392B";
+  $("#scoreNum").textContent=R.score;
+  $("#scoreBand").innerHTML=`المستوى: <span style="color:${R.band[1]}">${R.band[0]}</span>`;
+  const V=[[R.affPol.length,"سياسة تحتاج تعديل"],[3,"إجراءات متأثرة"],[R.affDept.length,"إدارات متأثرة"],[R.emp,"موظف متأثر"],[R.affSys.length,"أنظمة متأثرة"],[R.riskAvg.toFixed(1)+" / 5","مستوى الخطورة"],[fmtSAR(R.cost),"التكلفة المتوقعة"],[R.weeks+" أسبوع","الوقت المطلوب"]];
+  $("#vars").innerHTML=V.map(v=>`<div class="var"><b class="mono">${v[0]}</b><span>${v[1]}</span></div>`).join("");
+  const ok=R.weeks<=R.availW;
+  $("#deadline").classList.toggle("tight",!ok);
+  $("#dlFill").style.width=Math.min(100,R.weeks/R.availW*100)+"%";
+  $("#dlText").textContent=`مطلوب ${R.weeks} أسبوعاً من أصل ${R.availW} أسبوعاً متاحاً حتى المهلة النظامية`;
+  $("#dlBadge").textContent=ok?"قابل للالتزام ✓":"خطر تجاوز المهلة ✗";
+  $("#dlBadge").style.color=ok?"var(--green)":"var(--red)";
+  $("#depts").innerHTML=DEPTS.map(d=>{
+    const ms=S.mappings.filter(m=>{const pol=POLICIES.find(p=>p.id===m.p);return pol&&pol.dept===d.id;});
+    if(!ms.length)return`<div class="dept"><span class="nm">${d.name}</span><div class="db"><i style="width:100%;background:var(--green)"></i></div><span class="pc" style="color:var(--green)">غير متأثرة</span></div>`;
+    const open=ms.filter(m=>m.rel!=="covered").length;
+    const ready=Math.round((1-open/ms.length)*100);
+    const col=ready>=80?"var(--green)":ready>=50?"var(--amber)":"var(--red)";
+    return`<div class="dept"><span class="nm">${d.name}</span><div class="db"><i style="width:${ready}%;background:${col}"></i></div><span class="pc" style="color:${col}">${ready}٪ جاهزة</span></div>`;}).join("");
+  const tot=R.g+R.p+R.cov;
+  $("#coverage").innerHTML=`
+    <div style="display:flex;height:26px;border-radius:6px;overflow:hidden;margin:6px 0 14px">
+      <div style="width:${R.g/tot*100}%;background:var(--red)"></div>
+      <div style="width:${R.p/tot*100}%;background:var(--amber)"></div>
+      <div style="width:${R.cov/tot*100}%;background:var(--green)"></div></div>
+    <div style="display:flex;gap:22px" class="mono">
+      <span><b style="color:var(--red);font-size:20px">${R.g}</b> فجوة</span>
+      <span><b style="color:var(--amber);font-size:20px">${R.p}</b> جزئي</span>
+      <span><b style="color:var(--green);font-size:20px">${R.cov}</b> مغطى</span></div>`;
+  const auto=S.mappings.filter(m=>m.st==="auto").length, pend=S.mappings.filter(m=>m.st==="pending").length;
+  $("#autoPct").textContent=Math.round(auto/S.mappings.length*100)+"٪";
+  $("#pendCt").textContent=pend;
+  $("#revCount").textContent=pend;$("#revCount").style.display=pend?"":"none";
+}
+function renderMatrix(){
+  let h="<tr><th>المتطلب</th>"+POLICIES.map(p=>`<th title="${p.title}">${p.id}</th>`).join("")+"</tr>";
+  REQS.forEach(r=>{h+=`<tr><td><b class="mono">${r.article}</b> — ${r.text.slice(0,46)}…</td>`;
+    POLICIES.forEach(p=>{const m=S.mappings.find(m=>m.r===r.id&&m.p===p.id);
+      h+=`<td>${m?`<span class="cell c-${m.rel}" title="${m.rel} · ثقة ${Math.round(m.c*100)}٪"></span>`:""}</td>`;});h+="</tr>";});
+  $("#mtx").innerHTML=h;
+}
+function renderReview(){
+  const list=S.mappings.filter(m=>m.st!=="auto");
+  $("#revList").innerHTML=list.length?list.map(m=>{const r=REQS.find(x=>x.id===m.r),p=POLICIES.find(x=>x.id===m.p);
+    return`<div class="rev ${m.st!=="pending"?"decided":""}" id="rev-${m.r}">
+      <div class="rh"><b class="mono">${r.article}</b><span class="tag t-${m.rel}">${m.rel==="gap"?"فجوة":m.rel==="partial"?"تطابق جزئي":"مغطى"}</span>
+        <span class="muted">${p?p.title:"—"}</span>
+        <div class="conf"><span class="muted">الثقة</span><div class="cb"><i style="width:${m.c*100}%"></i></div><b class="mono">${Math.round(m.c*100)}٪</b></div></div>
+      <div class="cols">
+        <div class="col"><h4>المتطلب التنظيمي</h4>${r.text}</div>
+        <div class="col"><h4>البند الأقرب في السياسة</h4>${m.cl||'<span class="muted">لا يوجد بند مطابق</span>'}</div></div>
+      <div class="rationale">🤖 تعليل النموذج: ${m.why}</div>
+      ${m.st==="pending"?`<div class="acts">
+        <button class="btn btn-green" onclick="decide('${m.r}','confirm')">اعتماد التقييم</button>
+        <button class="btn btn-line" onclick="decide('${m.r}','covered')">مغطى فعلياً — تجاوز</button>
+        <button class="btn btn-red" onclick="decide('${m.r}','gap')">تصعيد إلى فجوة</button></div>`
+      :`<div class="decision" style="color:var(--green)">✓ قرار المراجع: ${m.st==="confirmed"?"اعتماد تقييم النموذج":m.st==="covered"?"مغطى فعلياً":"تصعيد إلى فجوة"} — وُثّق في سجل التدقيق</div>`}</div>`;}).join("")
+  :'<div class="card">لا توجد حالات بانتظار المراجعة — جميع الروابط معتمدة. ✓</div>';
+}
+window.decide=(rid,act)=>{const m=S.mappings.find(x=>x.r===rid);const before=compute().score;
+  if(act==="covered")m.rel="covered"; if(act==="gap")m.rel="gap";
+  m.st=act==="confirm"?"confirmed":act;
+  S.base=compute();renderDash(S.base);renderMatrix();renderReview();renderWhatif();renderPlan(S.base);
+  const after=S.base.score;
+  if(before!==after){const el=$("#scoreNum");el.style.transition="none";el.setAttribute("fill",after<before?"#0E7A5F":"#C0392B");setTimeout(()=>el.setAttribute("fill","#101826"),900);}};
+
+function renderWhatif(){
+  const base=compute({defer:0,train:800,cap:4});
+  const R=compute();
+  $("#oDefer").textContent=S.defer+"٪";$("#oTrain").textContent=S.train+" ر.س";$("#oCap").textContent=S.cap+" مسارات";
+  $("#wiScore").textContent=R.score;$("#wiCost").textContent=fmtSAR(R.cost);$("#wiTime").textContent=R.weeks+" أسبوع";
+  const d=(now,b,el,suffix="")=>{const diff=now-b;const e=$(el);
+    e.textContent=diff===0?"دون تغيير":(diff<0?"▼ ":"▲ ")+Math.abs(suffix?Math.round(diff):diff===Math.round(diff)?diff:diff.toFixed(2)).toLocaleString("ar")+suffix;
+    e.className="delta "+(diff<0?"down":diff>0?"up":"");};
+  d(R.score,base.score,"#wiScoreD"," نقطة");d(Math.round(R.cost/1e3),Math.round(base.cost/1e3),"#wiCostD"," ألف ر.س");d(R.weeks,base.weeks,"#wiTimeD"," أسبوع");
+}
+["rDefer","rTrain","rCap"].forEach(id=>$( "#"+id).addEventListener("input",e=>{
+  S.defer=+$("#rDefer").value;S.train=+$("#rTrain").value;S.cap=+$("#rCap").value;renderWhatif();}));
+
+function renderPlan(R){
+  const byDept={};
+  S.mappings.filter(m=>m.rel!=="covered"&&m.p).forEach(m=>{
+    const p=POLICIES.find(x=>x.id===m.p),r=REQS.find(x=>x.id===m.r);
+    const risk=RISKS.find(rk=>rk.reqs.includes(m.r));
+    (byDept[p.dept]=byDept[p.dept]||[]).push({
+      t:(m.rel==="gap"?"إعداد تغطية جديدة: ":"تعديل «"+p.title+"» لتلبية: ")+r.text.slice(0,60)+"…",
+      pr:(risk&&risk.sev>=4)||m.rel==="gap"?"high":"med",
+      eff:m.rel==="gap"?COST.effGap:COST.effPartial,art:r.article});});
+  $("#planList").innerHTML=Object.keys(byDept).map(did=>{
+    const tasks=byDept[did].sort((a,b)=>a.pr==="high"?-1:1);
+    return`<div class="plan-dept"><h3>${dep(did).name} <span class="muted">(${tasks.length} مهمة · ${tasks.reduce((s,t)=>s+t.eff,0)} يوم عمل)</span></h3>
+      ${tasks.map(t=>`<div class="task"><span class="pr ${t.pr}">${t.pr==="high"?"عالية":"متوسطة"}</span><b class="mono" style="font-size:12px">${t.art}</b><span>${t.t}</span><span class="eff">${t.eff} يوم</span></div>`).join("")}</div>`;}).join("");
+}
+
+/* ================= CHAT ================= */
+window.toggleChat=()=>$("#chat").classList.toggle("on");
+$("#chatBtn").onclick=toggleChat;
+$("#chatForm").onsubmit=e=>{e.preventDefault();const q=$("#chatIn").value.trim();if(!q)return;$("#chatIn").value="";
+  const box=$("#chatMsgs");box.insertAdjacentHTML("beforeend",`<div class="msg u"></div>`);box.lastChild.textContent=q;
+  const ql=q.toLowerCase();
+  const hit=CANNED.find(c=>c.k.some(k=>ql.includes(k)||q.includes(k)));
+  const ans=hit?hit.a:"لا يغطي التشريع هذه النقطة بشكل مباشر. جرّب السؤال عن: مسؤول حماية البيانات، مهلة الإبلاغ عن الحوادث، نقل البيانات خارج المملكة، الموافقة التسويقية، التدريب، أو فترات الاحتفاظ.";
+  setTimeout(()=>{box.insertAdjacentHTML("beforeend",`<div class="msg a"></div>`);box.lastChild.textContent=ans;box.scrollTop=box.scrollHeight;},500);
+  box.scrollTop=box.scrollHeight;};
+</script>
+</body>
+</html>
