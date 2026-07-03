@@ -1,0 +1,150 @@
+{
+  "regulation": {
+    "id": "REG-2026-014",
+    "title_ar": "تعليمات حماية بيانات عملاء المؤسسات المالية",
+    "title_en": "Financial Institutions Customer Data Protection Instructions",
+    "regulator": "SAMA (ساما) — عرض توضيحي",
+    "issue_date": "2026-06-01",
+    "compliance_deadline": "2026-12-01",
+    "articles_count": 9,
+    "requirements_count": 24,
+    "note": "FICTIONAL regulation created for demo purposes only — inspired by PDPL + SAMA cyber/consumer-protection themes"
+  },
+  "institution": {
+    "name_ar": "بنك النموذج",
+    "name_en": "Namouthaj Bank (fictional)",
+    "total_employees": 1240
+  },
+  "departments": [
+    { "id": "D1", "name_ar": "الالتزام", "name_en": "Compliance", "headcount": 22 },
+    { "id": "D2", "name_ar": "الأمن السيبراني", "name_en": "Cybersecurity", "headcount": 35 },
+    { "id": "D3", "name_ar": "تقنية المعلومات", "name_en": "IT", "headcount": 110 },
+    { "id": "D4", "name_ar": "التسويق", "name_en": "Marketing", "headcount": 48 },
+    { "id": "D5", "name_ar": "خدمة العملاء", "name_en": "Customer Care", "headcount": 125 },
+    { "id": "D6", "name_ar": "الموارد البشرية", "name_en": "HR", "headcount": 40 },
+    { "id": "D7", "name_ar": "إدارة المخاطر", "name_en": "Risk Management", "headcount": 18 },
+    { "id": "D8", "name_ar": "العمليات", "name_en": "Operations", "headcount": 230 }
+  ],
+  "systems": [
+    { "id": "S1", "name": "Core Banking", "department_id": "D3", "change_cost_band": "L" },
+    { "id": "S2", "name": "CRM", "department_id": "D5", "change_cost_band": "M" },
+    { "id": "S3", "name": "Marketing Automation", "department_id": "D4", "change_cost_band": "S" },
+    { "id": "S4", "name": "Data Warehouse", "department_id": "D3", "change_cost_band": "L" },
+    { "id": "S5", "name": "Mobile Banking App", "department_id": "D3", "change_cost_band": "M" },
+    { "id": "S6", "name": "SIEM / Monitoring", "department_id": "D2", "change_cost_band": "M" }
+  ],
+  "policies": [
+    { "id": "P1", "title_ar": "سياسة خصوصية بيانات العملاء", "department_id": "D1", "version": "2.1" },
+    { "id": "P2", "title_ar": "سياسة الأمن السيبراني", "department_id": "D2", "version": "3.0" },
+    { "id": "P3", "title_ar": "سياسة الاحتفاظ بالبيانات وإتلافها", "department_id": "D3", "version": "1.4" },
+    { "id": "P4", "title_ar": "سياسة التسويق والاتصالات الرقمية", "department_id": "D4", "version": "2.0" },
+    { "id": "P5", "title_ar": "إجراءات التعامل مع شكاوى العملاء", "department_id": "D5", "version": "1.8" },
+    { "id": "P6", "title_ar": "سياسة إدارة الأطراف الثالثة والموردين", "department_id": "D1", "version": "1.2" },
+    { "id": "P7", "title_ar": "سياسة تدريب وتوعية الموظفين", "department_id": "D6", "version": "1.0" },
+    { "id": "P8", "title_ar": "سياسة الاستجابة للحوادث", "department_id": "D2", "version": "2.3" },
+    { "id": "P9", "title_ar": "سياسة إدارة الوصول والصلاحيات", "department_id": "D3", "version": "2.7" },
+    { "id": "P10", "title_ar": "سياسة الإفصاح والشفافية للعملاء", "department_id": "D5", "version": "1.1" },
+    { "id": "P11", "title_ar": "سجل ومنهجية إدارة المخاطر", "department_id": "D7", "version": "3.1" },
+    { "id": "P12", "title_ar": "سياسة نقل البيانات خارج المملكة", "department_id": "D1", "version": "1.0" }
+  ],
+  "requirements": [
+    { "id": "R01", "article": "المادة 2-1", "type": "prescriptive", "text_ar": "يجب على المؤسسة المالية تعيين مسؤول حماية بيانات مستقل يتبع للإدارة العليا مباشرة." },
+    { "id": "R02", "article": "المادة 2-2", "type": "prescriptive", "text_ar": "يجب إنشاء سجل شامل لأنشطة معالجة بيانات العملاء وتحديثه بشكل ربع سنوي." },
+    { "id": "R03", "article": "المادة 3-1", "type": "prescriptive", "text_ar": "يجب الحصول على موافقة صريحة وموثقة من العميل قبل استخدام بياناته لأغراض تسويقية." },
+    { "id": "R04", "article": "المادة 3-2", "type": "prohibitive", "text_ar": "يحظر مشاركة بيانات العملاء مع أطراف ثالثة لأغراض تسويقية دون موافقة مستقلة ومنفصلة." },
+    { "id": "R05", "article": "المادة 3-3", "type": "prescriptive", "text_ar": "يجب تمكين العميل من سحب موافقته التسويقية عبر جميع القنوات الرقمية خلال مدة لا تتجاوز 48 ساعة." },
+    { "id": "R06", "article": "المادة 4-1", "type": "prescriptive", "text_ar": "يجب تشفير بيانات العملاء أثناء النقل والتخزين وفق المعايير الوطنية المعتمدة." },
+    { "id": "R07", "article": "المادة 4-2", "type": "prescriptive", "text_ar": "يجب تطبيق مبدأ الحد الأدنى من الصلاحيات على جميع الأنظمة التي تعالج بيانات العملاء." },
+    { "id": "R08", "article": "المادة 4-3", "type": "prescriptive", "text_ar": "يجب إجراء اختبار اختراق سنوي للأنظمة الحرجة المتعاملة مع بيانات العملاء وتوثيق نتائجه." },
+    { "id": "R09", "article": "المادة 4-4", "type": "prescriptive", "text_ar": "يجب مراقبة الوصول لبيانات العملاء آلياً وتسجيل جميع عمليات الاطلاع والتعديل." },
+    { "id": "R10", "article": "المادة 5-1", "type": "prescriptive", "text_ar": "يجب إبلاغ البنك المركزي عن حوادث تسريب البيانات خلال 24 ساعة من اكتشافها." },
+    { "id": "R11", "article": "المادة 5-2", "type": "prescriptive", "text_ar": "يجب إبلاغ العملاء المتأثرين بحادث التسريب خلال 72 ساعة إذا كان الحادث عالي الخطورة." },
+    { "id": "R12", "article": "المادة 5-3", "type": "prescriptive", "text_ar": "يجب إجراء تمرين محاكاة سنوي لحوادث تسريب البيانات بمشاركة الإدارات المعنية." },
+    { "id": "R13", "article": "المادة 6-1", "type": "prescriptive", "text_ar": "يجب تحديد فترات احتفاظ قصوى لكل فئة من بيانات العملاء وإتلافها آلياً بعد انتهائها." },
+    { "id": "R14", "article": "المادة 6-2", "type": "prohibitive", "text_ar": "يحظر الاحتفاظ ببيانات العملاء المنتهية علاقتهم بالمؤسسة لمدة تتجاوز عشر سنوات إلا بمقتضى نظامي." },
+    { "id": "R15", "article": "المادة 7-1", "type": "prescriptive", "text_ar": "يجب تقييم مخاطر حماية البيانات لدى أي طرف ثالث قبل التعاقد ومراجعته سنوياً." },
+    { "id": "R16", "article": "المادة 7-2", "type": "prescriptive", "text_ar": "يجب تضمين بنود إلزامية لحماية البيانات في جميع عقود الموردين الذين يصلون لبيانات العملاء." },
+    { "id": "R17", "article": "المادة 7-3", "type": "prohibitive", "text_ar": "يحظر نقل بيانات العملاء خارج المملكة إلا بعد الحصول على عدم ممانعة البنك المركزي." },
+    { "id": "R18", "article": "المادة 8-1", "type": "prescriptive", "text_ar": "يجب تدريب جميع الموظفين المتعاملين مع بيانات العملاء تدريباً إلزامياً سنوياً وتوثيق اجتيازه." },
+    { "id": "R19", "article": "المادة 8-2", "type": "prescriptive", "text_ar": "يجب تضمين متطلبات حماية البيانات في برنامج تهيئة الموظفين الجدد." },
+    { "id": "R20", "article": "المادة 9-1", "type": "prescriptive", "text_ar": "يجب تمكين العميل من الاطلاع على بياناته المحفوظة وطلب تصحيحها عبر القنوات الرقمية." },
+    { "id": "R21", "article": "المادة 9-2", "type": "prescriptive", "text_ar": "يجب الرد على طلبات العملاء المتعلقة ببياناتهم خلال مدة لا تتجاوز 15 يوم عمل." },
+    { "id": "R22", "article": "المادة 9-3", "type": "prescriptive", "text_ar": "يجب نشر إشعار خصوصية واضح بلغة مبسطة بالعربية والإنجليزية في جميع القنوات." },
+    { "id": "R23", "article": "المادة 2-3", "type": "prescriptive", "text_ar": "يجب إدراج مخاطر حماية البيانات ضمن سجل المخاطر المؤسسي ومراجعتها ربع سنوياً." },
+    { "id": "R24", "article": "المادة 4-5", "type": "informative", "text_ar": "تُعد المعايير الوطنية للتشفير الصادرة عن الجهات المختصة مرجعاً فنياً لهذه التعليمات." }
+  ],
+  "mappings": [
+    { "requirement_id": "R01", "policy_id": "P1", "relation": "gap", "confidence": 0.91, "review_status": "auto", "rationale_ar": "لا يوجد نص في أي سياسة حالية عن تعيين مسؤول حماية بيانات مستقل." },
+    { "requirement_id": "R02", "policy_id": "P1", "relation": "partial", "confidence": 0.78, "review_status": "pending", "rationale_ar": "السياسة تذكر توثيق المعالجة لكن دون سجل شامل أو دورية تحديث ربع سنوية.", "policy_clause_ar": "البند 4.2: توثق المؤسسة عمليات معالجة البيانات الرئيسية عند الحاجة." },
+    { "requirement_id": "R03", "policy_id": "P4", "relation": "partial", "confidence": 0.88, "review_status": "auto", "rationale_ar": "سياسة التسويق تشترط الموافقة لكن لا تشترط أن تكون صريحة وموثقة.", "policy_clause_ar": "البند 3.1: يُراعى الحصول على موافقة العميل قبل الحملات التسويقية." },
+    { "requirement_id": "R04", "policy_id": "P4", "relation": "gap", "confidence": 0.93, "review_status": "auto", "rationale_ar": "لا يوجد حظر على مشاركة البيانات مع أطراف ثالثة لأغراض تسويقية." },
+    { "requirement_id": "R05", "policy_id": "P4", "relation": "gap", "confidence": 0.86, "review_status": "auto", "rationale_ar": "آلية سحب الموافقة خلال 48 ساعة غير موجودة في أي سياسة أو نظام." },
+    { "requirement_id": "R06", "policy_id": "P2", "relation": "covered", "confidence": 0.95, "review_status": "auto", "rationale_ar": "سياسة الأمن السيبراني تلزم بالتشفير أثناء النقل والتخزين وفق المعايير الوطنية.", "policy_clause_ar": "البند 5.3: تُشفَّر بيانات العملاء أثناء النقل والتخزين وفق متطلبات الجهات التنظيمية." },
+    { "requirement_id": "R07", "policy_id": "P9", "relation": "covered", "confidence": 0.92, "review_status": "auto", "rationale_ar": "سياسة إدارة الوصول تطبق مبدأ الحد الأدنى من الصلاحيات.", "policy_clause_ar": "البند 2.1: تُمنح الصلاحيات وفق مبدأ الحاجة الفعلية والحد الأدنى." },
+    { "requirement_id": "R08", "policy_id": "P2", "relation": "partial", "confidence": 0.71, "review_status": "pending", "rationale_ar": "السياسة تتطلب اختبار اختراق دون تحديد دورية سنوية أو نطاق بيانات العملاء.", "policy_clause_ar": "البند 7.2: تُجرى اختبارات الاختراق للأنظمة الحرجة بشكل دوري." },
+    { "requirement_id": "R09", "policy_id": "P2", "relation": "partial", "confidence": 0.82, "review_status": "pending", "rationale_ar": "المراقبة موجودة عبر SIEM لكن تسجيل عمليات الاطلاع على مستوى السجل غير منصوص عليه.", "policy_clause_ar": "البند 6.1: تُراقب الأنظمة الحرجة عبر مركز العمليات الأمنية." },
+    { "requirement_id": "R10", "policy_id": "P8", "relation": "partial", "confidence": 0.89, "review_status": "auto", "rationale_ar": "سياسة الاستجابة تلزم بالإبلاغ خلال 48 ساعة والتعليمات الجديدة تشترط 24 ساعة.", "policy_clause_ar": "البند 4.4: يتم إبلاغ الجهات التنظيمية خلال 48 ساعة من تصنيف الحادث." },
+    { "requirement_id": "R11", "policy_id": "P8", "relation": "gap", "confidence": 0.87, "review_status": "auto", "rationale_ar": "لا يوجد التزام بإبلاغ العملاء المتأثرين ضمن مدة محددة." },
+    { "requirement_id": "R12", "policy_id": "P8", "relation": "gap", "confidence": 0.68, "review_status": "pending", "rationale_ar": "تمارين المحاكاة مذكورة للحوادث السيبرانية عموماً وليس لتسريب البيانات تحديداً — يحتاج قرار بشري." },
+    { "requirement_id": "R13", "policy_id": "P3", "relation": "partial", "confidence": 0.84, "review_status": "pending", "rationale_ar": "فترات الاحتفاظ محددة لكن الإتلاف يدوي وليس آلياً.", "policy_clause_ar": "البند 3.2: تُتلف البيانات بعد انتهاء فترة الاحتفاظ بموجب طلب من مالك البيانات." },
+    { "requirement_id": "R14", "policy_id": "P3", "relation": "covered", "confidence": 0.9, "review_status": "auto", "rationale_ar": "السياسة تحدد حداً أقصى عشر سنوات متوافقاً مع التعليمات.", "policy_clause_ar": "البند 2.4: الحد الأقصى للاحتفاظ ببيانات العملاء السابقين عشر سنوات." },
+    { "requirement_id": "R15", "policy_id": "P6", "relation": "partial", "confidence": 0.76, "review_status": "pending", "rationale_ar": "تقييم الموردين موجود عند التعاقد فقط دون مراجعة سنوية.", "policy_clause_ar": "البند 5.1: يُقيَّم المورد أمنياً قبل توقيع العقد." },
+    { "requirement_id": "R16", "policy_id": "P6", "relation": "covered", "confidence": 0.88, "review_status": "auto", "rationale_ar": "بنود حماية البيانات إلزامية في نموذج العقد الموحد.", "policy_clause_ar": "البند 6.2: تتضمن جميع العقود ملحق حماية البيانات المعتمد." },
+    { "requirement_id": "R17", "policy_id": "P12", "relation": "partial", "confidence": 0.63, "review_status": "pending", "rationale_ar": "سياسة النقل تتطلب موافقة داخلية فقط — اشتراط عدم ممانعة البنك المركزي غير موجود. تشابه لفظي منخفض، يحتاج مراجعة.", "policy_clause_ar": "البند 1.3: يتطلب نقل البيانات خارج المملكة موافقة لجنة أمن المعلومات." },
+    { "requirement_id": "R18", "policy_id": "P7", "relation": "partial", "confidence": 0.8, "review_status": "pending", "rationale_ar": "التدريب سنوي لكنه غير إلزامي ولا يشترط توثيق الاجتياز.", "policy_clause_ar": "البند 2.2: تُقدَّم برامج توعية دورية للموظفين." },
+    { "requirement_id": "R19", "policy_id": "P7", "relation": "gap", "confidence": 0.85, "review_status": "auto", "rationale_ar": "برنامج التهيئة للموظفين الجدد لا يتضمن وحدة حماية البيانات." },
+    { "requirement_id": "R20", "policy_id": "P10", "relation": "gap", "confidence": 0.89, "review_status": "auto", "rationale_ar": "لا توجد آلية رقمية لاطلاع العميل على بياناته أو طلب تصحيحها." },
+    { "requirement_id": "R21", "policy_id": "P5", "relation": "partial", "confidence": 0.74, "review_status": "pending", "rationale_ar": "إجراءات الشكاوى تحدد 20 يوم عمل والتعليمات تشترط 15 يوماً.", "policy_clause_ar": "البند 4.1: يُرد على طلبات العملاء خلال 20 يوم عمل." },
+    { "requirement_id": "R22", "policy_id": "P10", "relation": "covered", "confidence": 0.9, "review_status": "auto", "rationale_ar": "إشعار الخصوصية منشور باللغتين في القنوات الرقمية.", "policy_clause_ar": "البند 2.1: يُنشر إشعار الخصوصية بالعربية والإنجليزية في الموقع والتطبيق." },
+    { "requirement_id": "R23", "policy_id": "P11", "relation": "partial", "confidence": 0.81, "review_status": "pending", "rationale_ar": "مخاطر البيانات مدرجة ضمن المخاطر التشغيلية لكن دون فئة مستقلة أو مراجعة ربع سنوية.", "policy_clause_ar": "البند 3.5: تُراجع المخاطر التشغيلية نصف سنوياً." },
+    { "requirement_id": "R24", "policy_id": null, "relation": "covered", "confidence": 0.97, "review_status": "auto", "rationale_ar": "متطلب تعريفي لا يتطلب إجراء." }
+  ],
+  "risk_register": [
+    { "id": "RK1", "title_ar": "تسريب بيانات العملاء", "severity": 5, "linked_requirements": ["R06", "R09", "R10", "R11"] },
+    { "id": "RK2", "title_ar": "مخالفة تنظيمية في التسويق المباشر", "severity": 4, "linked_requirements": ["R03", "R04", "R05"] },
+    { "id": "RK3", "title_ar": "وصول غير مصرح به للأنظمة", "severity": 4, "linked_requirements": ["R07", "R09"] },
+    { "id": "RK4", "title_ar": "إخفاق مورد خارجي في حماية البيانات", "severity": 4, "linked_requirements": ["R15", "R16", "R17"] },
+    { "id": "RK5", "title_ar": "احتفاظ غير نظامي بالبيانات", "severity": 3, "linked_requirements": ["R13", "R14"] },
+    { "id": "RK6", "title_ar": "ضعف وعي الموظفين", "severity": 3, "linked_requirements": ["R18", "R19"] },
+    { "id": "RK7", "title_ar": "تأخر الاستجابة لطلبات العملاء", "severity": 2, "linked_requirements": ["R20", "R21"] }
+  ],
+  "scoring_defaults": {
+    "weights": { "gaps": 0.30, "risk": 0.20, "departments": 0.15, "systems": 0.15, "employees": 0.10, "procedures": 0.10 },
+    "unit_costs_sar": {
+      "policy_amendment": 45000,
+      "training_per_employee": 800,
+      "system_change_S": 80000,
+      "system_change_M": 250000,
+      "system_change_L": 700000
+    },
+    "effort_days": { "gap_task": 25, "partial_task": 12 },
+    "team_capacity_parallel_tasks": 4
+  },
+  "precomputed_assessment": {
+    "impact_score": 68,
+    "band_ar": "مرتفع",
+    "variables": {
+      "affected_policies": 12,
+      "affected_procedures": 3,
+      "affected_departments": 7,
+      "affected_employees": 398,
+      "affected_systems": 5,
+      "risk_level": "4.2 / 5",
+      "expected_cost_sar": 2410000,
+      "required_time_weeks": 14
+    },
+    "deadline_weeks_available": 22,
+    "gaps_count": 7,
+    "partials_count": 11,
+    "covered_count": 5,
+    "auto_resolved_pct": 58,
+    "pending_review_count": 10
+  },
+  "canned_chat_answers": [
+    { "q_keywords": ["مسؤول", "حماية البيانات", "DPO"], "answer_ar": "نعم — المادة 2-1 تلزم بتعيين مسؤول حماية بيانات مستقل يتبع للإدارة العليا مباشرة. حالياً لا توجد سياسة داخلية تغطي هذا المتطلب (فجوة، ثقة 91٪)." },
+    { "q_keywords": ["24 ساعة", "إبلاغ", "تسريب", "حادث"], "answer_ar": "المادة 5-1 تشترط إبلاغ البنك المركزي خلال 24 ساعة من اكتشاف الحادث. سياسة الاستجابة الحالية (البند 4.4) تنص على 48 ساعة — تحتاج تعديل." },
+    { "q_keywords": ["نقل", "خارج المملكة", "عبر الحدود"], "answer_ar": "المادة 7-3 تحظر نقل بيانات العملاء خارج المملكة إلا بعد عدم ممانعة البنك المركزي. سياسة النقل الحالية تكتفي بموافقة لجنة داخلية — تطابق جزئي بثقة 63٪ ويحتاج مراجعة بشرية." },
+    { "q_keywords": ["تسويق", "موافقة"], "answer_ar": "المواد 3-1 إلى 3-3: موافقة صريحة موثقة قبل التسويق، حظر المشاركة مع أطراف ثالثة دون موافقة منفصلة، وتمكين سحب الموافقة خلال 48 ساعة. إدارة التسويق من أكثر الإدارات تأثراً — فجوتان وتطابق جزئي واحد." },
+    { "q_keywords": ["تدريب", "موظفين"], "answer_ar": "المادة 8-1 تلزم بتدريب سنوي إلزامي موثق لكل من يتعامل مع بيانات العملاء (398 موظف متأثر تقديرياً)، والمادة 8-2 تلزم بإدراجه في تهيئة الموظفين الجدد — وهي فجوة حالياً." }
+  ]
+}
