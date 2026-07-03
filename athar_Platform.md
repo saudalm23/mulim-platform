@@ -1,6 +1,6 @@
 # PRD — Regulatory Impact Simulation Platform for the Financial Sector
 ### منصة محاكاة الأثر التشريعي للقطاع المالي
-**Codename suggestion: "Mulim" (مُلم)** · Version 1.0 · Prepared for: Amad Hackathon (Saudi Arabia) · Date: July 2026
+**Codename suggestion: "Athar" (أثر)** · Version 1.0 · Prepared for: Amad Hackathon (Saudi Arabia) · Date: July 2026
 
 ---
 
@@ -9,7 +9,7 @@
 **One-liner:** Before any regulation is applied, know its cost, risks, and impact in minutes instead of weeks.
 (قبل تطبيق أي تشريع، اعرف تكلفته ومخاطره وتأثيره بدقائق بدل أسابيع)
 
-Mulim ingests (a) a new regulation/circular from a Saudi regulator (SAMA, CMA, NCA, SDAIA) and (b) the institution's internal corpus — policies, procedures, org structure, risk register — then computes the **intersection** between the two. The output is an Impact Score (0–100), a gap map showing exactly which policies/departments/systems are affected, an estimated compliance cost and timeline, and an auto-generated implementation plan.
+Athar ingests (a) a new regulation/circular from a Saudi regulator (SAMA, CMA, NCA, SDAIA) and (b) the institution's internal corpus — policies, procedures, org structure, risk register — then computes the **intersection** between the two. The output is an Impact Score (0–100), a gap map showing exactly which policies/departments/systems are affected, an estimated compliance cost and timeline, and an auto-generated implementation plan.
 
 **Core design principle (the 80/20 rule):** AI does ~80% of the mapping work with a confidence score per link; a human compliance officer reviews, corrects, and approves the remaining 20%. Every AI output is traceable to a source clause (human-in-the-loop governance, same posture as Lameh's "governed layer" model — mandatory for regulated environments).
 
@@ -31,7 +31,7 @@ Today this analysis takes **weeks of manual work** by compliance, legal, and ris
 
 ## 3. Target Users & Personas
 
-| Persona | Role | What they need from Mulim |
+| Persona | Role | What they need from Athar |
 |---|---|---|
 | **P1 — Chief Compliance Officer** | Owns regulatory response | Impact Score, executive summary, cost/time estimate for board reporting |
 | **P2 — Compliance Analyst** | Does the mapping work | Requirement-by-requirement gap view, review/approve AI mappings (the 20%) |
